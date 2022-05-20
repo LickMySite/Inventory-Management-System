@@ -1,0 +1,23 @@
+Options All -Indexes
+ServerSignature Off
+
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{QUERY_STRING} (<|%3C).*script.*(>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} GLOBALS(=|[|%[0-9A-Z]{0,2}) [OR]
+RewriteCond %{QUERY_STRING} _REQUEST(=|[|%[0-9A-Z]{0,2})
+RewriteRule ^(.*)$ index.php [F,L]
+
+<IfModule mod_rewrite.c>
+  Options -Multiviews
+  RewriteEngine On
+  RewriteCond %{HTTPS} off
+  RewriteRule .* - [E=REQUEST_SCHEME:http]
+
+  RewriteCond %{HTTPS} on
+  RewriteRule .* - [E=REQUEST_SCHEME:https]
+
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteRule  ^(.+)$ index.php?url=$1 [QSA,L]
+</IfModule>
