@@ -2,7 +2,7 @@
 $path = $_SERVER['REQUEST_SCHEME'] . "://". $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'];
 $path = str_replace("index.php", "", $path);
 
-/*website file paths*/
+//website file paths
 define('ROOT', $path);
 define('ASSETS', $path . "assets/");
 define('THEME','');
@@ -10,7 +10,7 @@ define('CONTROLLER', 'home');
 define('METHOD', 'index');
 define('APPPATH', dirname(dirname(__FILE__)).'/');
 
-/*protocal type http or https*/
+//protocal type http or https
 define('PROTOCAL','http');
 
 // Code we want to run on every page/script

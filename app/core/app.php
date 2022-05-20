@@ -7,7 +7,6 @@ Class App
 	protected $params;
 
 	public function __construct(){
-		//get current url
 		$url = $this->parseURL();
 
     if(isset($url[0])){
@@ -56,6 +55,6 @@ Class App
 		
 		return $path;
 	}
-	
-	
+
+
 }
