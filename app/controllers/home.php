@@ -7,8 +7,8 @@ Class Home extends Controller
 		if($url === 'home'){
 			$data['page'] = 'home';
 
-			return $this->view('home', $data);
+			return $this->view('index', $data);
 		}	
-		return $this->view('404');
+		return $this->view('page/404');
 	}
 }
