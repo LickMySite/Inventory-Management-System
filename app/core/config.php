@@ -9,6 +9,8 @@ define('THEME','');
 define('CONTROLLER', 'home');
 define('METHOD', 'index');
 define('APPPATH', dirname(dirname(__FILE__)).'/');
+define('LOGIN', 'login');
+
 
 //protocal type http or https
 define('PROTOCAL','http');
