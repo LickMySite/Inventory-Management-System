@@ -14,17 +14,20 @@
             Manage Inventory
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<?=ROOT;?>">Inventory</a></li>
+            <li><a class="dropdown-item" href="<?=ROOT;?>inventory/">Inventory</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?=ROOT;?>">Receiving</a></li>
-            <li><a class="dropdown-item" href="<?=ROOT;?>">Shipping</a></li>
+            <li><a class="dropdown-item" href="<?=ROOT;?>receiving/">Receiving</a></li>
+            <li><a class="dropdown-item" href="<?=ROOT;?>shipping/">Shipping</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?=ROOT;?>">About</a>
+          <a class="nav-link" href="<?=ROOT;?>about/">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?=ROOT;?>">Contact</a>
+          <a class="nav-link" href="<?=ROOT;?>contact/">Contact</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?=ROOT;?>login/">Login</a>
         </li>
       </ul>
       <form class="d-flex">
