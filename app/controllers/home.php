@@ -6,9 +6,8 @@ Class Home extends Controller
 	{
 		if($url === 'home'){
 			$data['page'] = 'home';
-
-			return $this->view('index', $data);
-		}	
-		return $this->view('page/404');
+		
+		}
+		return $this->view('index', !isset($data)?:$data);
 	}
 }
