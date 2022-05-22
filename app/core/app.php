@@ -11,12 +11,16 @@ Class App
 
     if(isset($url[0])){
 
-				if(in_array($url[0],$this->files(APPPATH.'controllers/'))){
-				$this->controller = $url[0];
+			if($url[0] == ADMIN){
+				$this->controller = "admin";
 				unset($url[0]);
+				}else
+					if(in_array($url[0],$this->files(APPPATH.'controllers/'))){
+					$this->controller = $url[0];
+					unset($url[0]);
+				}
 			}
-		}
-		
+			
 		require_once APPPATH."controllers/" . $this->controller . ".php";
 
 		$this->controller = new $this->controller;

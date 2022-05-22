@@ -11,6 +11,7 @@ Class Controller
 			get_object_vars($data);
 			new $data;
 		}
+
 		if(file_exists(APPPATH."/views/" . $url . ".php")){
       require_once APPPATH."/views/" . $url . ".php";
       }
@@ -18,8 +19,8 @@ Class Controller
 
 	public function load_model(string $model){
 
-		if(file_exists("../app/models/" . strtolower($model) . ".class.php")){
-			require_once "../app/models/" . strtolower($model) . ".class.php";
+		if(file_exists(APPPATH."/models/" . strtolower($model) . ".class.php")){
+			require_once APPPATH."/models/" . strtolower($model) . ".class.php";
 			return $a = new $model();
 		}
 		

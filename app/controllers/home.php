@@ -9,18 +9,15 @@ Class Home extends Controller
 	{
 
 		$this->pages = array(
+			CONTROLLER,
 			'about',
 			'contact'
 		);
 
-		if($url == 'home' || in_array($url,$this->pages)){
-			$data['page'] = $url;
+		$key = array_search($url,$this->pages);
+		if(is_int($key)){
+			$data['page'] = $this->pages[$key];
 		}
-
-		if($url == LOGIN){
-			$data['page'] = 'login';
-		}
-
 
 		return $this->view('index', !isset($data)?:$data);
 	}
