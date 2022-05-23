@@ -6,6 +6,41 @@ function show($data){
 	echo "<b></pre>";
 }
 
+function check_error(){
+	if(isset($_SESSION['error']) && $_SESSION['error'] != "")
+	{
+		echo $_SESSION['error'];
+		unset($_SESSION['error']);
+	}
+}
+
+function redirect($link){
+	header("Location: " . ROOT . $link);
+	die;
+}
+
+function show_input($data){
+	$data = trim($data);
+	$data = htmlspecialchars($data);
+	return $data;
+}
+
+function clean_input($data) {
+  $data = trim($data);
+  $data = addslashes($data);
+  $data = htmlentities($data, ENT_QUOTES, 'UTF-8');
+  return $data;
+}
+
+function str_to_url($url) {
+	$url = preg_replace('~[^\\pL0-9_]+~u', '-', $url);
+	$url = trim($url, "-");
+	$url = iconv("utf-8", "us-ascii//TRANSLIT", $url);
+	$url = strtolower($url);
+	$url = preg_replace('~[^-a-z0-9_]+~', '', $url);
+	return $url;
+}
+
 //CSRF
 function createToken() {
 	$seed = urlSafeEncode(random_bytes(8));
