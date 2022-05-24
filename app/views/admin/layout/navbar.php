@@ -7,27 +7,27 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="<?=ROOT;?>">Home</a>
+          <a class="nav-link active" aria-current="page" href="<?=ADMIN;?>">Home</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Manage Inventory
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<?=ROOT;?>inventory/">Inventory</a></li>
+            <li><a class="dropdown-item" href="<?=ADMIN?>inventory/">Inventory</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?=ROOT;?>receiving/">Receiving</a></li>
-            <li><a class="dropdown-item" href="<?=ROOT;?>shipping/">Shipping</a></li>
+            <li><a class="dropdown-item" href="<?=ADMIN?>receiving/">Receiving</a></li>
+            <li><a class="dropdown-item" href="<?=ADMIN?>shipping/">Shipping</a></li>
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?=ROOT;?>about/">About</a>
+          <a class="nav-link" href="<?=ADMIN;?>accounts/">Accounts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?=ROOT;?>contact/">Contact</a>
+          <a class="nav-link" href="<?=ADMIN;?>settings/">Settings</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?=ROOT;?>login/">Login</a>
+          <a class="nav-link" href="<?=ADMIN;?>logout/">Logout</a>
         </li>
       </ul>
       <form class="d-flex">

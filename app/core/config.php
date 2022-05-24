@@ -5,21 +5,22 @@ $path = str_replace("index.php", "", $path);
 //website file paths
 define('ROOT', $path);
 define('ASSETS', $path . "assets/");
+define('LOGIN', $path . "login/");
+define('ADMIN', $path . "admin/");
+
 define('THEME','');
 define('CONTROLLER', 'home');
 define('METHOD', 'index');
 define('APPPATH', dirname(dirname(__FILE__)).'/');
-define('LOGIN', 'login');
-define('ADMIN', "admin");
 
 // Global Variables
 define('MAX_LOGIN_ATTEMPTS_PER_HOUR', 15);
 define('MAX_EMAIL_VERIFICATION_REQUESTS_PER_DAY', 3);
 define('MAX_PASSWORD_RESET_REQUESTS_PER_DAY', 3);
 define('PASSWORD_RESET_REQUEST_EXPIRY_TIME', 60*60);
-define('CSRF_TOKEN_SECRET', '123');
-define('VALIDATE_EMAIL_ENDPOINT', 'http://localhost/Secure/validateEmail'); //Do not include trailing /
-define('RESET_PASSWORD_ENDPOINT', 'http://localhost/Secure/resetpassword'); //Do not include trailing /
+define('CSRF_TOKEN_SECRET', '1234'); //Enter unique string 
+//define('VALIDATE_EMAIL_ENDPOINT', 'http://localhost/Secure/validateEmail'); //Do not include trailing /
+//define('RESET_PASSWORD_ENDPOINT', 'http://localhost/Secure/resetpassword'); //Do not include trailing /
 
 //protocal type http or https
 define('PROTOCAL','http');
