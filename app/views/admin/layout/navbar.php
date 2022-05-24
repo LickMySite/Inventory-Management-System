@@ -21,6 +21,9 @@
           </ul>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="<?=ADMIN;?>users/">Users</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="<?=ADMIN;?>account/">Accounts</a>
         </li>
         <li class="nav-item">
