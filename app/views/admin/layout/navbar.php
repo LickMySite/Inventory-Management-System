@@ -21,10 +21,10 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?=ADMIN;?>accounts/">Accounts</a>
+          <a class="nav-link" href="<?=ADMIN;?>account/">Accounts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?=ADMIN;?>settings/">Settings</a>
+        <a class="nav-link" href="<?=ADMIN;?>settings/">Settings</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?=ADMIN;?>logout/">Logout</a>

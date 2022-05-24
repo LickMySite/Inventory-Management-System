@@ -45,7 +45,7 @@ Class User
 					my_session_regenerate_id();
 					$_SESSION['user_url'] = $result;
 					$this->user_data($result);
-					redirect(ADMIN);
+					header("Location: " . ADMIN);
 				}
 
 		}
@@ -320,7 +320,7 @@ Class User
 			$access[1] = ['admin',3,2,1];
 
 			if(!in_array($user_role, $access[$allowed])){
-				header("Location: " . ROOT . ADMIN);
+				header("Location: " . ADMIN);
 				die;
 			}
 		}else{

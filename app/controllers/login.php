@@ -7,7 +7,7 @@ Class Login extends Controller
 	{
 
 		if(isset($_SESSION['user_url']) && $_SESSION['user_url'] != ""){
-			redirect(ADMIN);
+			header("Location: " . ADMIN);
 		}
 
 

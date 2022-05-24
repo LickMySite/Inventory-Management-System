@@ -128,22 +128,15 @@ Class Admin extends Controller{
 		$data['master'] = $this->master;
 		$data['url_client_NAME'] = $this->url_client_NAME;
 
-		if($this->master == true){
-			$right_bar['clients'] = $this->load_model('Client')->company_name_list();
-			$right_bar['page'] = $this->page;
-		}
-
 		$this->view("admin/layout/head",$arr);
 		$this->view("admin/layout/navbar");
-		$this->default === false ?: $this->view("admin/page/default-page",$data);
-		$this->default !== false ?: $this->view("admin/page/".$data['page'],$data);
+		$this->view("admin/page/".$data['page'],$data);
     $this->view("admin/layout/footer",$arr);
 	}
 
 	//pages
 	public function index($url, $err = null){
 		$this->load_user_data(3);
-
 		if($url == CONTROLLER && is_null($err)){
 			$this->page = "home";
 			if($this->master === true){
@@ -261,7 +254,6 @@ Class Admin extends Controller{
 
 	public function inventory($url, $err = null){
 		$this->load_user_data(3);
-
 		if(is_null($err)){
 
 			if($url === CONTROLLER){
@@ -646,7 +638,7 @@ Class Admin extends Controller{
 	}
 
 	public function settings(){
-		$arr['user_info'] = $this->load_user_data();
+		$this->load_user_data(3);
 		$Settings = new Settings();
 
 		if(isset($_GET['saved']) && $_GET['saved'] == true){
