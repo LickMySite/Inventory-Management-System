@@ -4,7 +4,7 @@ Class Admin extends Controller{
 
 	protected $master = false;
 	protected $default = false;
-	protected $page = 404;
+	protected $page = false;
 	protected $action;
 	protected $type;
 	protected $style;
@@ -114,6 +114,7 @@ Class Admin extends Controller{
 
 	private function load_page($data = []){
 
+
 		$arr = array(
 			"page" => $this->page,
 			"action" => $this->action,
@@ -130,7 +131,7 @@ Class Admin extends Controller{
 
 		$this->view("admin/layout/head",$arr);
 		$this->view("admin/layout/navbar");
-		$this->view("admin/page/".$data['page'],$data);
+		$this->view("admin/page",$data);
     $this->view("admin/layout/footer",$arr);
 	}
 

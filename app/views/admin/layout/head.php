@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,4 +15,3 @@
   <link rel="stylesheet" href="<?=ASSETS?>css/custom.css">
 
 </head>
-<body>
