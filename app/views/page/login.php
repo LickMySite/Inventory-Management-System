@@ -18,7 +18,6 @@
 			<input type="password" name="password" placeholder="Password" id="password" autocomplete="off" required pattern="^(?=.*[A-Z\u00C0-\u00DF].*)(?=.*[0-9].*)(?=.*[a-z\u00E0-\u00FF].*).{8,}$"/>
 
 			<button type="submit" class="red">Submit</button>
-			<button disabled>Submit</button>        
 
 		</form>
   </div>

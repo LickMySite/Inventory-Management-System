@@ -9,17 +9,6 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="<?=ROOT;?>">Home</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Manage Inventory
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="<?=ROOT;?>inventory/">Inventory</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="<?=ROOT;?>receiving/">Receiving</a></li>
-            <li><a class="dropdown-item" href="<?=ROOT;?>shipping/">Shipping</a></li>
-          </ul>
-        </li>
         <li class="nav-item">
           <a class="nav-link" href="<?=ROOT;?>about/">About</a>
         </li>
@@ -30,10 +19,6 @@
           <a class="nav-link" href="<?=ROOT;?>login/">Login</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
     </div>
   </div>
 </nav>

@@ -1,8 +1,4 @@
-<div class="container">
-  <div class="col">
-    <div class="row text-center">
-      <h1>Admin Page</h1>
-      <p>This is the shipping page</p>
-    </div>
-  </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+  <h1 class="h2"><?=ucfirst($page);?> Page</h1>
+  <p>This is the <?=ucfirst($page);?> page</p>
 </div>
