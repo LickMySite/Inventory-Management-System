@@ -549,9 +549,6 @@ Class Admin extends Controller{
 
 		$User = $this->load_model('User');
 
-
-
-
 		if(is_null($err)){
 
 			if($url === CONTROLLER){
