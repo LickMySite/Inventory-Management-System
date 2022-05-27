@@ -341,7 +341,6 @@ Class Admin extends Controller{
 				$REC = $this->load_model('Receiving');
 
 				$arr['client_list'] = $this->load_model('Client')->company_name_list();
-				$arr['table'] = $this->load_model('Client')->company_name_list();
 			}else
 
 			if($url === 'view'){

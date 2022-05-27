@@ -476,8 +476,8 @@ Class User
 
 					$result .=
 					'<tr data-item-id="'.$user->id.'">
-						<td><a href="'.ROOT.ADMIN.'/users/profile/'.$user->name.'">'.$user->name.'</a></td>
-						<td><a href="'.ROOT.ADMIN.'/inventory/'.$client[0]->client_name.'"><strong>'.$client[0]->client_name.'</strong></a></td>
+						<td><a href="'.ADMIN.'users/profile/'.$user->name.'">'.$user->name.'</a></td>
+						<td><a href="'.ADMIN.'inventory/'.$client[0]->client_name.'"><strong>'.$client[0]->client_name.'</strong></a></td>
 						<td>'.$user->user_role.'</td>
 						<td>'.$user->username.'</td>
 						<td>'.$user->email.'</td>
