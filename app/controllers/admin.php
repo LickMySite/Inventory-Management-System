@@ -130,9 +130,9 @@ Class Admin extends Controller{
 		$data['url_client_NAME'] = $this->url_client_NAME;
 
 		$this->view("admin/layout/head",$arr);
-		$this->view("admin/layout/navbar");
 		$this->view("admin/page",$data);
-    $this->view("admin/layout/footer",$arr);
+		$this->view("admin/layout/script");
+
 	}
 
 	//pages
