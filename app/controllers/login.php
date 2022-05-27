@@ -22,7 +22,7 @@ Class Login extends Controller
 		}
 		$data['page'] = 'login';
 
-		$this->view('index', !isset($data)?:$data);
+		$this->view('page/login',$data);
 
 	}
 

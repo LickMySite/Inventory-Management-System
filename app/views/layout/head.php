@@ -10,6 +10,9 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
+  <link rel="shortcut icon" href="<?=ASSETS?>img/logo.png" type="image/x-icon" />
+  <link rel="apple-touch-icon" href="<?=ASSETS?>img/logo.png">
+
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
   
   <link rel="stylesheet" href="<?=ASSETS?>css/custom.css">
