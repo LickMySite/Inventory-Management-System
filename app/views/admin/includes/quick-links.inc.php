@@ -7,7 +7,7 @@
 
     <a class="btn btn-<?php echo ($page == "inventory") ? "success" : "default";?> w-100" href="<?=ADMIN;?>inventory/<?=isset($client_NAME) ? $client_NAME : '';?>">Inventory</a>
 
-    <a class="btn btn-<?php echo ($page == "receiving") ? "success" : "default";?> w-100" href="<?=ADMIN;?>receiving/<?=isset($client_NAME) ? $client_NAME : '';?>">Receive</a>
+    <a class="btn btn-<?php echo ($page == "receiving") ? "success" : "default";?> w-100" href="<?=ADMIN;?>receiving/<?=isset($client_NAME) ? 'view/' .$client_NAME : '';?>">Receive</a>
 
     <a class="btn btn-<?= ($page == "shipping") ? "success" : "default";?> w-100" href="<?=ADMIN;?>shipping/<?=isset($client_NAME) ? $client_NAME : '';?>">Shipping</a>
   </div>

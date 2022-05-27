@@ -14,7 +14,7 @@ Class Admin extends Controller{
 	protected $user_role;
 	protected $client_ID = int;
 	protected $url_client_ID = int;
-	protected $url_client_NAME = '';
+	protected $url_client_NAME = null;
 
 	//page assets
 	private function load_user_data($role = null){
@@ -130,7 +130,9 @@ Class Admin extends Controller{
 		$data['url_client_NAME'] = $this->url_client_NAME;
 
 		$this->view("admin/layout/head",$arr);
-		$this->view("admin/page",$data);
+		$this->view("admin/layout/header");
+		$this->view("admin/layout/sidebar",$data);
+		$this->view("admin/index",$data);
 		$this->view("admin/layout/script");
 
 	}
