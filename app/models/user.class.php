@@ -18,12 +18,13 @@ Class User
 
 	}
 
+	//start login and checks
 	public function login(){
 
 		$POST = array();
 		$POST['email'] = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
 		$POST['password'] = filter_input(INPUT_POST,'password',FILTER_SANITIZE_SPECIAL_CHARS);
-		$POST['csrf_token'] = $this->clean($_POST['csrf_token']);
+		$POST['csrf_token'] = clean_input($_POST['csrf_token']);
 
 
 		if(
@@ -49,6 +50,7 @@ Class User
 				}
 
 		}
+
 		if(!$this->blocked){
 			$DB = Database::getInstance();
 
@@ -65,7 +67,7 @@ Class User
 
 		$_SESSION['error'] = $this->error;
 	}
-
+	
 	private function attempts_ip(){
 
 		if (filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)) {
@@ -237,27 +239,9 @@ Class User
 
 	}
 	
-	private function validate_password(string $data){
-		if(empty($data))
-		{
-			$this->error .= "Please enter a password <br>";
-			return $this->error;
-		}
+	//end login and checks
 
-		// Validate password strength
-		$uppercase = preg_match('@[A-Z]@', $data);
-		$lowercase = preg_match('@[a-z]@', $data);
-		$number    = preg_match('@[0-9]@', $data);
-		$special = preg_match('@[^\w]@', $data);
-		$space = preg_match('@[ ]@', $data);
 
-		if(!$uppercase || !$lowercase || !$number || !$special || $space || strlen($data) < 8) {
-			$this->error .= 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
-			return $this->error;
-		}
-
-		
-	}
 
 	public function get_user($url){
 
@@ -347,13 +331,6 @@ Class User
 		die;
 	}
 
-	private function clean($data){
-		$data = trim($data);
-		$data = addslashes($data);
-		$data = htmlentities($data, ENT_QUOTES, 'UTF-8');
-		return $data;
-	}
-
 	public function signup($POST){
 
 		//Check for empty inputs
@@ -381,7 +358,7 @@ Class User
 			}
 
 			$this->validate_email($POST['email']);
-			$this->validate_password($POST['password']);
+			$this->validate_pwd($POST['password']);
 		}
 		//check if email already exists
 		if($this->error == ""){
