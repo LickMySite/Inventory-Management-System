@@ -58,7 +58,7 @@ Class User
 			$arr['email'] 	= $this->clean($POST['email']);
 			$query = 
 			"SELECT email from users where email = :email limit 1";
-			$DB = Database::getInstance();
+			$DB = Database::newInstance();
 			$check = $DB->read($query,$arr);
 
 			if(is_array($check)){
@@ -161,7 +161,7 @@ Class User
 		}
 
 		if(!$this->blocked){
-			$DB = Database::getInstance();
+			$DB = Database::newInstance();
 
 			$arr = array();
 			$arr['user'] = $this->id;
@@ -190,7 +190,7 @@ Class User
 				where ip = :ip AND timestamp> :hourAgo
 			";
 
-			$DB = Database::getInstance();
+			$DB = Database::newInstance();
 			$result = $DB->read($query,$arr);
 
 				if($result[0]->attempt > MAX_LOGIN_ATTEMPTS_PER_HOUR) {
@@ -249,7 +249,7 @@ Class User
 			where email = :email 
 		";
 
-		$DB = Database::getInstance();
+		$DB = Database::newInstance();
 		$result = $DB->read($query,$data);
 
 		if(is_array($result) && $result[0]->e == 1){
@@ -273,7 +273,7 @@ Class User
 			";
 
 
-		$DB = Database::getInstance();
+		$DB = Database::newInstance();
 		$result = $DB->read($query,$arr);
 
 			if($result[0]->attempt > MAX_LOGIN_ATTEMPTS_PER_HOUR) {
@@ -288,7 +288,7 @@ Class User
 		$data['email'] = filter_var($email,FILTER_SANITIZE_EMAIL);
 		
 		//check if user exists
-		$DB = Database::getInstance();
+		$DB = Database::newInstance();
 		$query = 
 		"SELECT users.id,url_address,password
 			from users
@@ -328,7 +328,7 @@ Class User
 			inner join client on users.client_id=client.id 
 			where users.url_address = :url limit 1";
 
-			$DB = Database::getInstance();
+			$DB = Database::newInstance();
 			$result = $DB->read($query,$arr);
 			
 			if(is_array($result)){
@@ -516,7 +516,7 @@ Class User
 	}
 
 	public function get_info(){
-		$db = Database::getInstance();
+		$db = Database::newInstance();
 
 		
 		$arr['url'] = isset($_SESSION['user_url']) ? $_SESSION['user_url'] : '' ;

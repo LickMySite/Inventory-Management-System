@@ -82,13 +82,16 @@ Class Database
 	public function write(string $query,array $data = array()){
 
 		$con = $this->connection();
-		$stm = $con->prepare($query);
 
-		if($stm){
-			$result = $stm->execute($data);
+		if($con){
+			$stm = $con->prepare($query);
 
-			if($result){
-				return true;
+			if($stm){
+				$result = $stm->execute($data);
+
+				if($result){
+					return true;
+				}
 			}
 		}
 		return false;

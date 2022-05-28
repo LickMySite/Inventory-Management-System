@@ -14,8 +14,11 @@ Class Controller
 
 		if(file_exists(APPPATH."/views/" . $url . ".php")){
       require_once APPPATH."/views/" . $url . ".php";
-      }
-    }
+      
+    }else{
+      require_once APPPATH."/views/404.php";
+		}
+	}
 
 	public function load_model(string $model){
 

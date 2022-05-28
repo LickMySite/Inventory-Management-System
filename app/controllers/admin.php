@@ -4,7 +4,7 @@ Class Admin extends Controller{
 
 	protected $master = false;
 	protected $default = false;
-	protected $page = false;
+	protected $page;
 	protected $action;
 	protected $type;
 	protected $style;
