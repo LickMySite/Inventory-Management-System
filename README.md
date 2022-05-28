@@ -4,7 +4,6 @@ A simple CRUD app to manage inventory.
 
 ## Description
 
-
 ## Getting Started
 
 ### Dependencies
@@ -27,3 +26,4 @@ ex. evan@lickmysite.com
 
 Inspiration, code snippets, etc.
 * [QuickProgramming](https://www.youtube.com/c/QuickProgramming)
+* [Bootstrap Examples](https://getbootstrap.com/docs/5.0/examples/)

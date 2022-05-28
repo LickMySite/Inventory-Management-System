@@ -6,6 +6,14 @@ function show($data){
 	echo "<b></pre>";
 }
 
+function check_msg(){
+	if(isset($_SESSION['msg']) && $_SESSION['msg'] != "")
+	{
+		echo $_SESSION['msg'];
+		unset($_SESSION['msg']);
+	}
+}
+
 function check_error(){
 	if(isset($_SESSION['error']) && $_SESSION['error'] != "")
 	{
@@ -18,6 +26,12 @@ function redirect($link){
 	header("Location: " . ROOT . $link);
 	die;
 }
+
+function redirect_ADMIN($link){
+	header("Location: " . ADMIN . $link);
+	die;
+}
+
 
 function show_input($data){
 	$data = trim($data);

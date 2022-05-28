@@ -242,7 +242,7 @@ Class Admin extends Controller{
 					$arr['POST'] = $_POST;
 				}else{
 					$thisClient = isset($arr['client']->name) ? $arr['client']->name : $_SESSION['client'];
-					redirect(ADMIN."/account/".$thisClient);
+					redirect_ADMIN("account/".$thisClient);
 				}
 
 			}
@@ -307,7 +307,7 @@ Class Admin extends Controller{
 						if(isset($_SESSION['msg']) && $_SESSION['msg'] != ""){
 							$data['msg'] = $_SESSION['msg'];
 						}
-						redirect(ADMIN."/inventory/".$arr['company_name']);
+						redirect_ADMIN("inventory/".$arr['company_name']);
 					}
 				}
 			}
@@ -432,11 +432,9 @@ Class Admin extends Controller{
 						$arr['POST'] = $_POST;
 						$company_info = $this->client_url_check($url);
 						if($company_info){
-							redirect(ADMIN."/receiving/".$url."/invoice/");
+							redirect_ADMIN("receiving/".$url."/invoice/");
 						}
 					}
-
-					//redirect(ADMIN."/receiving/".$company_name);
 				}
 
 			}
@@ -528,7 +526,7 @@ Class Admin extends Controller{
 					$data['errors'] = $_SESSION['error'];
 					$data['POST'] = $_POST;
 				}else{
-					redirect(ADMIN."/shipping/".$company_name);
+					redirect_ADMIN("shipping/".$company_name);
 				}
 
 			}
@@ -647,7 +645,7 @@ Class Admin extends Controller{
 		if(count($_POST) > 0)
 		{
 			$errors = $Settings->save_settings($_POST);
-			redirect(ADMIN.'/settings?saved=true');
+			redirect_ADMIN('settings?saved=true');
 			die;
 		}
 
@@ -664,11 +662,9 @@ Class Admin extends Controller{
 		if(isset($_SESSION['user_url']))
 		{
 			unset($_SESSION);
+		}
 			my_session_regenerate_id();
 			session_destroy();
-		}
-
-		header("Location: " . ROOT . "login");
-		die;
+			redirect('login');
 	}
 }
