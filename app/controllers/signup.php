@@ -1,6 +1,6 @@
 <?php 
 
-Class Login extends Controller
+Class Signup extends Controller
 {
 
 	public function index()
@@ -14,16 +14,18 @@ Class Login extends Controller
 
 		if($_SERVER['REQUEST_METHOD'] == "POST"){
 
+			$user = new User();
 
-			$this->load_model("User")->login();
+			$user->signup($_POST);
 
 			if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
 				$data['errors'] = $_SESSION['error'];
 			}
 		}
-		$data['page'] = 'login';
 
-		$this->view('page/login',$data);
+		$data['page'] = 'signup';
+
+		$this->view('page/signup',$data);
 
 	}
 

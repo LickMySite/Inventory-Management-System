@@ -18,6 +18,115 @@ Class User
 
 	}
 
+	public function signup($POST){
+
+		$POST['username'] = 'testpiolet';
+		$POST['company'] = 1;
+		$POST['user_role'] = 3;
+
+		//Check for empty inputs
+		foreach($POST as $key => $value){
+			if(empty($value)) {
+				$this->error .= "Value $key is required <br>";
+			}
+		}
+		//Validate inputs
+		if($this->error == ""){
+			if(!preg_match("/^[a-zA-Z- ]+$/", $POST['name'])){
+				$this->error .= "Please enter a valid name <br>";
+			}
+
+			if(!preg_match("/^[a-zA-Z0-9-]+$/", $POST['username'])){
+				$this->error .= "Please enter a valid username <br>";
+			}
+
+			if(filter_var($POST['company'], FILTER_VALIDATE_INT) === false){
+				$this->error .= "Select Company <br>";
+			}
+
+			if(filter_var($POST['user_role'], FILTER_VALIDATE_INT) === false){
+				$this->error .= "Select user role <br>";
+			}
+
+			$this->validate_email($POST['email']);
+			$this->validate_pwd($POST['password']);
+		}
+		//check if email already exists
+		if($this->error == ""){
+
+			$arr = array();
+			$arr['email'] 	= $this->clean($POST['email']);
+			$query = 
+			"SELECT email from users where email = :email limit 1";
+			$DB = Database::getInstance();
+			$check = $DB->read($query,$arr);
+
+			if(is_array($check)){
+				$this->error .= "That email is already in use <br>";
+			}else{
+			$data['email'] = $arr['email'];
+			}
+		}
+
+		//check if username already exists
+		if($this->error == ""){
+			$arr = array();
+			$arr['username'] 	= $this->clean($POST['username']);
+
+			$query = "SELECT username from users where username = :username limit 1";
+			$check = $DB->read($query,$arr);
+
+			if(is_array($check)){
+				$this->error .= "That username is already in use <br>";
+			}else{
+			$data['username'] = $arr['username'];
+			}
+
+
+		}
+
+		//check for url_address
+		if($this->error == ""){
+			$arr = array();
+
+			$arr['url_address'] = $this->get_random_string_max(60);
+
+			$query = "SELECT url_address from users where url_address = :url_address limit 1";
+			$check = $DB->read($query,$arr);
+			if(is_array($check)){
+				$arr['url_address'] = $this->get_random_string_max(60);
+			}
+			$data['url_address'] = $arr['url_address'];
+		}
+		//Set variables -> Sanitize data -> Write to DB
+		if($this->error == ""){
+			$data['name'] = $this->clean($POST["name"]);
+			$data['user_role'] = $this->clean($POST['user_role']);
+			$data['company'] = $this->clean($POST['company']);
+			$data['avatar'] = "abc";
+			$data['password'] = hash('sha1',$POST['password']);
+			$data['date'] = date("Y-m-d H:i:s");
+
+	
+			$query = "INSERT into users (url_address,name,email,password,date,username,avatar,user_role,client_id) values (:url_address,:name,:email,:password,:date,:username,:avatar,:user_role,:company)";
+
+			$result = $DB->write($query,$data);
+
+			if($result){
+				unset($_POST);
+				$_SESSION['msg'] = "User Created";
+				//return false;
+				header("Location: " . ROOT . "login");
+				die;
+			}else{
+				$this->error .= "Something went wrong";
+			}
+		}
+	
+		$_SESSION['error'] = $this->error;
+	}
+
+
 	//start login and checks
 	public function login(){
 
@@ -331,108 +440,6 @@ Class User
 		die;
 	}
 
-	public function signup($POST){
-
-		//Check for empty inputs
-		foreach($POST as $key => $value){
-			if(empty($value)) {
-				$this->error .= "Value $key is required <br>";
-			}
-		}
-		//Validate inputs
-		if($this->error == ""){
-			if(!preg_match("/^[a-zA-Z- ]+$/", $POST['name'])){
-				$this->error .= "Please enter a valid name <br>";
-			}
-
-			if(!preg_match("/^[a-zA-Z0-9-]+$/", $POST['username'])){
-				$this->error .= "Please enter a valid username <br>";
-			}
-
-			if(filter_var($POST['company'], FILTER_VALIDATE_INT) === false){
-				$this->error .= "Select Company <br>";
-			}
-
-			if(filter_var($POST['user_role'], FILTER_VALIDATE_INT) === false){
-				$this->error .= "Select user role <br>";
-			}
-
-			$this->validate_email($POST['email']);
-			$this->validate_pwd($POST['password']);
-		}
-		//check if email already exists
-		if($this->error == ""){
-
-			$arr = array();
-			$arr['email'] 	= $this->clean($POST['email']);
-			$query = 
-			"SELECT email from users where email = :email limit 1";
-			$DB = Database::getInstance();
-			$check = $DB->read($query,$arr);
-
-			if(is_array($check)){
-				$this->error .= "That email is already in use <br>";
-			}else{
-			$data['email'] = $arr['email'];
-			}
-		}
-		//check if username already exists
-		if($this->error == ""){
-			$arr = array();
-			$arr['username'] 	= $this->clean($POST['username']);
-
-			$query = "SELECT username from users where username = :username limit 1";
-			$check = $DB->read($query,$arr);
-
-			if(is_array($check)){
-				$this->error .= "That username is already in use <br>";
-			}else{
-			$data['username'] = $arr['username'];
-			}
-
-
-		}
-
-		//check for url_address
-		if($this->error == ""){
-			$arr = array();
-
-			$arr['url_address'] = $this->get_random_string_max(60);
-
-			$query = "SELECT url_address from users where url_address = :url_address limit 1";
-			$check = $DB->read($query,$arr);
-			if(is_array($check)){
-				$arr['url_address'] = $this->get_random_string_max(60);
-			}
-			$data['url_address'] = $arr['url_address'];
-		}
-		//Set variables -> Sanitize data -> Write to DB
-		if($this->error == ""){
-			$data['name'] = $this->clean($POST["name"]);
-			$data['user_role'] = $this->clean($POST['user_role']);
-			$data['company'] = $this->clean($POST['company']);
-			$data['avatar'] = "abc";
-			$data['password'] = hash('sha1',$POST['password']);
-			$data['date'] = date("Y-m-d H:i:s");
-
-	
-			$query = "INSERT into users (url_address,name,email,password,date,username,avatar,user_role,client_id) values (:url_address,:name,:email,:password,:date,:username,:avatar,:user_role,:company)";
-
-			$result = $DB->write($query,$data);
-
-			if($result){
-				unset($_POST);
-				$_SESSION['msg'] = "User Created";
-				//return false;
-				//header("Location: " . ROOT . "login");
-				//die;
-			}else{
-				$this->error .= "Something went wrong";
-			}
-		}
-	
-		$_SESSION['error'] = $this->error;
-	}
 
 	public function get_all_table(){
 
@@ -524,4 +531,12 @@ Class User
 
 		}
 	}
+
+	private function clean($data) {
+		$data = trim($data);
+		$data = addslashes($data);
+		$data = htmlentities($data, ENT_QUOTES, 'UTF-8');
+		return $data;
+	}
+	
 }

@@ -43,4 +43,9 @@
 	require_once APPPATH."core/controller.php";
 	require_once APPPATH."core/setting.class.php";
 	require_once APPPATH."core/app.php";
+
+	spl_autoload_register(function($class_name){
+		require APPPATH."models/" .$class_name . ".class.php";
+	});
+
 	$app = new App();

@@ -18,6 +18,9 @@
             <a class="nav-link" href="<?=ROOT;?>contact/">Contact</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="<?=ROOT;?>signup/">Signup</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="<?=ROOT;?>login/">Login</a>
           </li>
         </ul>
