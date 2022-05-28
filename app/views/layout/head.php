@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,15 +7,16 @@
   <title><?=isset($page) ? $page : 404;?></title>
 
   <meta name="keywords" content="">
-  <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="description" content="Inventory management system">
+  <meta name="author" content="LickMySite">
 
   <link rel="shortcut icon" href="<?=ASSETS?>img/logo.png" type="image/x-icon" />
   <link rel="apple-touch-icon" href="<?=ASSETS?>img/logo.png">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
-  
+
+  <link rel="stylesheet" href="<?=ASSETS?>css/theme.css">
   <link rel="stylesheet" href="<?=ASSETS?>css/custom.css">
 
 </head>
-<body>
+<body class="d-flex flex-column h-100">

@@ -2,23 +2,38 @@
 
 Class Home extends Controller
 {
+	protected $page;
+	protected $pages = array(
+		CONTROLLER,
+		'about',
+		'contact'
+	);
 
-	protected $pages;
 
-	public function index($url)
-	{
+	private function load_page(){
 
-		$this->pages = array(
-			CONTROLLER,
-			'about',
-			'contact'
-		);
+		$data['page'] = $this->page;
+
+		$this->view("layout/head",$data);
+		$this->view("layout/navbar",$data);
+		$this->view("index",$data);
+		$this->view("layout/footer");
+		$this->view("layout/script");
+
+	}
+
+
+
+
+	public function index($url){
+
 
 		$key = array_search($url,$this->pages);
-		if(is_int($key)){
-			$data['page'] = $this->pages[$key];
-		}
 
-		return $this->view('index', !isset($data)?:$data);
+		$this->page = !is_int($key)?null:$this->pages[$key];
+
+		return $this->load_page();
 	}
+
+
 }

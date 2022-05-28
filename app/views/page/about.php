@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container pt-4">
     <div class="col">
       <div class="row text-center">
-        <h1>About Page</h1>
+        <h1 class="mt-5">About Page</h1>
         <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est numquam, quos suscipit officia ipsum sapiente delectus beatae minima. Nam, cum? Delectus optio temporibus, quam cumque perspiciatis fugit voluptatem possimus laudantium?
         Voluptas provident commodi aspernatur rem molestiae magnam, natus id velit hic officia, enim qui? Aliquid eaque porro maiores repellat ex, doloremque quidem temporibus ut pariatur voluptatibus dicta officia distinctio fugit.
         Incidunt esse rem iure voluptatem sequi nesciunt, soluta a unde quasi sint deleniti voluptatum quia quidem culpa at temporibus nisi vero consequatur id magnam placeat, dignissimos impedit! Officia, minima? Iste?

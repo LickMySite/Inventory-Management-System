@@ -1,6 +1,5 @@
-<?php
+<main class="flex-shrink-0">
 
-$this->view('layout/head', $data);
-$this->view('layout/navbar', $data);
-$this->view($page? "page/$page" :404,$data);
-$this->view('layout/footer', $data);
+    <?php $this->view($page? "page/$page" :404,$data);?>
+
+</main>
