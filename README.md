@@ -10,6 +10,8 @@ A simple CRUD app to manage inventory.
 
 * Bootstrap 5.1
 * PHP
+* [DataTables](https://datatables.net/)
+* [jQuery](https://jquery.com/)
 
 ## Authors
 

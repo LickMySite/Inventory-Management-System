@@ -93,3 +93,14 @@ body {
   background-color: hsl(0, 0%, 20%);
   color: hsl(215, 40%, 50%);
 }
+
+
+
+/* Datatables custom css
+* https://datatables.net/
+* Used for sorting, search and pagnation for tables
+*/
+
+.dataTables_filter,.dataTables_length{
+  margin: 1rem;
+}

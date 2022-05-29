@@ -1,9 +1,10 @@
-<table class="table table-bordered table-striped mb-0" id="datatable-tabletools">
+<div class="table-responsive">
+<table class="table table-bordered table-striped mb-0 mt-4 table-hover" id="myTable">
   <thead>
     <tr>
     <?= ($master === true && !isset($company_info)) ? '<th width="17%">Company</th>' : '';?>
     
-    <th>Item</th>
+    <th scope="col">Item</th>
     <th class="d-none d-lg-block">Per</th>
     <th>Begin</th>
     <th>Received</th>
@@ -20,10 +21,11 @@
           <td><?=$data->begin;?></td>
           <td><?=$data->rec;?></td>
           <td><?=$data->ship;?></td>
-          <td class="<?php if($data->finish < 0){ echo 'danger';}?> text-end"><?=$data->finish;?></td>
+          <td class="<?php if($data->finish < 0){ echo 'danger';}?>"><?=$data->finish;?></td>
         </tr>
 
       <?php endforeach;?>
     <?php endif;?>
   </tbody>
 </table>
+</div>
