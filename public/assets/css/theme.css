@@ -1,0 +1,25 @@
+html {
+	direction: ltr;
+	overflow-x: hidden;
+	box-shadow: none !important;
+	-webkit-font-smoothing: antialiased;
+}
+
+body {
+	background-color: hsl(0, 0%, 95%);
+	color: hsl(0, 0%, 40%);
+	font-family: "Poppins", Arial, sans-serif;
+	font-size: 14px;
+	line-height: 26px;
+	margin: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+@media (max-width: 575px) {
+	body {
+		font-size: 13px;
+	}
+}

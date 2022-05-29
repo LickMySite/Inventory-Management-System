@@ -69,7 +69,7 @@
                             <td><?=$value->username;?></td>
                             <td><?=$value->user_role;?></td>
                             <td class="actions">
-                              <a href="<?=ROOT.ADMIN.'/users/profile/'.$value->name;?>"><i class="fas fa-pencil-alt"></i></a>
+                              <a href="<?=ADMIN.'users/profile/'.$value->name;?>"><i class="fas fa-pencil-alt"></i></a>
                             </td>
                           </tr>
                         <?php endforeach;?>

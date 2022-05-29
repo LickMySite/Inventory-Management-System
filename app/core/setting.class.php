@@ -5,8 +5,7 @@ Class Settings
 	private $error = array();
 	protected static $SETTINGS = null;
 
-	public function get_all_settings()
-	{
+	public function get_all_settings(){
 	
 		$db = Database::newInstance();
 		$query = "select * from settings";
