@@ -257,7 +257,7 @@ Class Admin extends Controller{
 
 	public function inventory($url, $err = null){
 		$this->load_user_data(3);
-		if(is_null($err)){
+		//if(is_null($err)){
 
 			if($url === CONTROLLER){
 				$this->assets_table();
@@ -274,48 +274,72 @@ Class Admin extends Controller{
 				}
 			}else
 
-			if($url != CONTROLLER){
-				if($this->master === true){
-					if($this->client_url_check($url)){
+			//if($url != CONTROLLER){
+
+			if($url === 'view'){
+
+					//if($this->master === true){
+
+					if($this->client_url_check($err)){
 						$this->assets_table();
 						$this->page = "inventory";
 						$this->default = true;
-		
+						
 						$arr['client_NAME'] = $this->url_client_NAME;
 						$Inventory = $this->load_model('Inventory');
 						$arr['table'] = $Inventory->get_inv_table($this->url_client_ID);
 						$arr['rate'] = $Inventory->get_rate(5);
 					}
-				}
 
-				if(count($_POST) > 0){
 
-						if(isset($_POST['type'])){
+				//}
+			}
+
+			if($url == 'edit'){
+				$this->page = "inventory";
+				$this->type = 'edit';
+				$Inventory = $this->load_model('Inventory');
+
+				$arr['item'] = $Inventory->get_one_item($err);
+				$CLIENT = $Inventory->get_client_name_by_id($arr['item']->client_id);
+			}
+
+
+
+				if($_SERVER['REQUEST_METHOD'] == "POST" && count($_POST) > 0){
+					$Inventory = $this->load_model('Inventory');
+					if(isset($_POST['type'])){
 							if($_POST['type'] == "editItem"){
 								$Inventory->edit($_POST);
 							}
 							if($_POST['type'] == "deleteItem"){
 								$Inventory->delete($_POST);
 							}
+							if($this->type == 'edit'){
+								$Inventory->edit_item($_POST,$arr['item']->item_id);
+							}
+
 					}
 
 					if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
-						$data['errors'] = $_SESSION['error'];
-
-						$data['POST'] = $_POST;
+						$arr['errors'] = $_SESSION['error'];
+						$arr['POST'] = $_POST;
 					}else{
 						if(isset($_SESSION['msg']) && $_SESSION['msg'] != ""){
-							$data['msg'] = $_SESSION['msg'];
+							$arr['msg'] = $_SESSION['msg'];
 						}
-						redirect_ADMIN("inventory/".$arr['company_name']);
+						redirect_ADMIN("inventory/view/".$CLIENT->client_name);
 					}
 				}
-			}
+
+			
+
+			//}
 
 			if(!empty($arr)){
 				return $this->load_page($this->get_data($arr));
 			}
-		}
+		//}
 
 		return $this->load_page();
 	}

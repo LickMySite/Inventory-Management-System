@@ -6,8 +6,8 @@ if(isset($errors)): echo
   '</div>';
 
 elseif(isset($_SESSION['msg'])): echo
-  '<div class="status alert alert-info" >'
+  '<div class="status alert alert-info" ><p>hello'
   .check_msg().
-  '</div>';
+  '</p></div>';
 
 endif;

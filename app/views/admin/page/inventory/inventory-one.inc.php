@@ -12,7 +12,7 @@
     <?php if(isset($table)):?>
       <?php foreach($table as $data):?>
         <tr data-item-id="<?=$data->item_id;?>">
-          <td data-title="Item"><strong><?=$data->item;?></strong></td>
+          <td data-title="Item"><strong><a href="<?=ADMIN.'inventory/edit/'.$data->item_id;?>"><?=$data->item;?></a></strong></td>
           <td class="d-none d-lg-block"><?=$data->per;?></td>
           <td><?=$data->begin;?></td>
           <td><?=$data->rec;?></td>

@@ -13,7 +13,7 @@
     <?php foreach($table as $data):?>
 
       <tr data-item-id="<?=$data->ship_id;?>">
-        <td><a href="<?=ROOT.ADMIN;?>/shipping/<?=$data->client_name;?>"><strong><?=$data->client_name;?></strong></a></td>
+        <td><a href="<?=ADMIN;?>shipping/<?=$data->client_name;?>"><strong><?=$data->client_name;?></strong></a></td>
         <td><?=$data->qty_ship;?></td>
         <td data-title="Item"><a class="modal-with-form" href="#editItem_<?=$data->item_id;?>"><strong><?=$data->item;?></strong></a></td>
         <td><?=$data->po;?></td>

@@ -63,17 +63,31 @@ Class Inventory
 
 	}
 	//use
-	public function edit($data){
+	public function edit_item($POST,int $ID){
+		// [item_id] => 144
+		// [type] => 
+		// [per] => 1
+		// [item] => a2
+		// [begin] => 0
+		// [client_id] => 8
+		// [rate_id] => 
+		$arr['item'] = filter_input(INPUT_POST,'item',FILTER_SANITIZE_SPECIAL_CHARS);
+		$arr['types'] = filter_input(INPUT_POST,'types',FILTER_SANITIZE_SPECIAL_CHARS);
+		$arr['per'] = filter_input(INPUT_POST,'per',FILTER_SANITIZE_SPECIAL_CHARS);
+		$arr['begin'] = filter_input(INPUT_POST,'begin',FILTER_SANITIZE_SPECIAL_CHARS);
+		$data['csrf_token'] = clean_input($_POST['csrf_token']);
+		$arr['item_id'] = $ID;
 
-		if(is_array($data)){
-			$arr['item_id'] = $data['item_id'];
-			$arr['item'] = $data['item'];
-			}else
-		if(is_object($data)){
-			$arr['item_id'] = $data->item_id;
-			$arr['item'] = $data->item;
-			}
-		$query = "UPDATE inventory set item = :item where item_id = :item_id limit 1";
+
+	// if(is_array($data)){
+	// 		$arr['item_id'] = $data['item_id'];
+	// 		$arr['item'] = $data['item'];
+	// 		}else
+	// 	if(is_object($data)){
+	// 		$arr['item_id'] = $data->item_id;
+	// 		$arr['item'] = $data->item;
+	// 		}
+		$query = "UPDATE inventory set item = :item, per = :per, begin =:begin, type =:types where item_id = :item_id";
 		$DB = Database::newInstance();
 		$DB->write($query,$arr);
 		$DB = null;
@@ -527,7 +541,6 @@ Class Inventory
 		return false;
 	}
 
-
 	public function set_rate($DATA){
 
 		$arr['client_id'] = $DATA['client_id'];
@@ -698,6 +711,37 @@ Class Inventory
 		if(is_array($result))
 		{
 			return $result;
+		}
+
+		return false;
+	}
+
+	public function get_one_item($ID){
+
+		$arr['ID'] = $ID;
+
+		$query = "SELECT * from inventory WHERE item_id = :ID";
+		$DB = Database::newInstance();
+		$result = $DB->read($query,$arr);
+		
+		if(is_array($result))
+		{
+			return $result[0];
+		}
+
+		return false;
+	}
+	public function get_client_name_by_id($id){
+
+		$arr['id'] = $id;
+
+		$DB = Database::newInstance();
+		$query = "select client_name from client where id = :id limit 1";
+		$result = $DB->read($query,$arr);
+
+		if(is_array($result))
+		{
+			return $result[0];
 		}
 
 		return false;

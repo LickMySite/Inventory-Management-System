@@ -15,8 +15,12 @@
     <?php if(isset($table)):?>
       <?php foreach($table as $data):?>
         <tr data-item-id="<?=$data->item_id;?>">
-          <?= ($master === true && !isset($company_info)) ? '<td><a href="'.ADMIN.'inventory/'.$data->client_name.'"><strong>'.$data->client_name.'</strong></a></td>' : '';?>
-          <td data-title="Item"><?=$data->item;?></strong></td>
+          <?= ($master === true && !isset($company_info)) ? '<td><a href="'.ADMIN.'inventory/view/'.$data->client_name.'"><strong>'.$data->client_name.'</strong></a></td>' : '';?>
+          <td data-title="Item">
+            <strong>
+              <a href="<?=ADMIN.'inventory/edit/'.$data->item_id;?>"><?=$data->item;?></a>
+            </strong>
+          </td>
           <td class="d-none d-lg-block"><?=$data->per;?></td>
           <td><?=$data->begin;?></td>
           <td><?=$data->rec;?></td>
