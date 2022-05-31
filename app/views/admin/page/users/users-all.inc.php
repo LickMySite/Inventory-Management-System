@@ -1,4 +1,4 @@
-<a class="btn btn-dark btn-md font-weight-semibold btn-py-2 px-4 mb-4" href="<?=ROOT.ADMIN.'/'.$page;?>/create">Create User</a>
+<a class="btn btn-dark btn-md font-weight-semibold btn-py-2 px-4 mb-4" href="<?=ADMIN.$page;?>/create">Create User</a>
 
 
 <table class="table table-no-more table-bordered table-striped mb-0" id="datatable-tabletools">
@@ -15,7 +15,7 @@
     <?php foreach($table as $data):?>
 
       <tr data-item-id="<?=$data->id;?>">
-        <?=!isset($current_company) ? '<td data-title="Company" class="text-end"><a href="'.ROOT.ADMIN.'/users/'.$data->client_name.'"><strong>'.$data->client_name.'</strong></a></td>' : '';?>
+        <?=!isset($current_company) ? '<td data-title="Company" class="text-end"><a href="'.ADMIN.'users/'.$data->client_name.'"><strong>'.$data->client_name.'</strong></a></td>' : '';?>
         <td data-title="User" class="text-end"><a class="modal-with-form" href="#editUser_<?=$data->id;?>"><strong><?=$data->name;?></strong></a></td>
         <td data-title="Email" class="text-end"><?=$data->email;?></td>
         <td data-title="Role" class="text-end"><?=$data->user_role;?></td>

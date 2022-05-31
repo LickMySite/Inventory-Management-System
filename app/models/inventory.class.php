@@ -62,37 +62,37 @@ Class Inventory
 		return false;
 
 	}
+
 	//use
-	public function edit_item($POST,int $ID){
-		// [item_id] => 144
-		// [type] => 
-		// [per] => 1
-		// [item] => a2
-		// [begin] => 0
-		// [client_id] => 8
-		// [rate_id] => 
-		$arr['item'] = filter_input(INPUT_POST,'item',FILTER_SANITIZE_SPECIAL_CHARS);
-		$arr['types'] = filter_input(INPUT_POST,'types',FILTER_SANITIZE_SPECIAL_CHARS);
-		$arr['per'] = filter_input(INPUT_POST,'per',FILTER_SANITIZE_SPECIAL_CHARS);
-		$arr['begin'] = filter_input(INPUT_POST,'begin',FILTER_SANITIZE_SPECIAL_CHARS);
+	public function edit_item(int $ID){
+
+		$arr['item'] = trim(filter_input(INPUT_POST,'item',FILTER_SANITIZE_SPECIAL_CHARS));
+		$arr['types'] = trim(filter_input(INPUT_POST,'types',FILTER_SANITIZE_SPECIAL_CHARS));
+		$arr['per'] = trim(filter_input(INPUT_POST,'per',FILTER_SANITIZE_SPECIAL_CHARS));
+		$arr['begin'] = trim(filter_input(INPUT_POST,'begin',FILTER_SANITIZE_SPECIAL_CHARS));
 		$data['csrf_token'] = clean_input($_POST['csrf_token']);
 		$arr['item_id'] = $ID;
 
+		!empty($arr['item'])?: $_SESSION['error'] = "Please enter an item name";
+		preg_match("/^[a-zA-Z0-9- ]+$/", $arr['item'])?:$_SESSION['error'] = "Please enter a valid item name";
+		!preg_match("/^[0-9]+$/", $arr['per'])
+			|| !is_int($arr['per'])
+			|| $arr['per'] != 0
+			?: $_SESSION['error'] = "Per must be a number";
+		!is_int($arr['begin']) || $arr['begin'] != 0 ?: $_SESSION['error'] = "Begin must be a number";
 
-	// if(is_array($data)){
-	// 		$arr['item_id'] = $data['item_id'];
-	// 		$arr['item'] = $data['item'];
-	// 		}else
-	// 	if(is_object($data)){
-	// 		$arr['item_id'] = $data->item_id;
-	// 		$arr['item'] = $data->item;
-	// 		}
-		$query = "UPDATE inventory set item = :item, per = :per, begin =:begin, type =:types where item_id = :item_id";
-		$DB = Database::newInstance();
-		$DB->write($query,$arr);
-		$DB = null;
-		$_SESSION['msg'] = "Item Edited!";
+		if(!isset($_SESSION['error']) || $_SESSION['error'] == ""){
+			$query = "UPDATE inventory set item = :item, per = :per, begin =:begin, type =:types where item_id = :item_id";
+			$DB = Database::newInstance();
+			$check = $DB->write($query,$arr);
 
+			if($check){
+				$_SESSION['msg'] = "Item Edited!";
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public function edit_rec($data){

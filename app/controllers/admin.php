@@ -5,7 +5,6 @@ Class Admin extends Controller{
 	protected $master = false;
 	protected $default = false;
 	protected $page;
-	protected $action;
 	protected $type;
 	protected $style;
 	protected $script;
@@ -114,27 +113,26 @@ Class Admin extends Controller{
 
 	private function load_page($data = []){
 
-
-		$arr = array(
+		$head = [
 			"page" => $this->page,
-			"action" => $this->action,
-			"master" => $this->master,
-			"style" => $this->style,
+			"style" => $this->style
+		];
+
+		$script = [
 			"script" => $this->script,
 			"example" => $this->example
-		);
+		];
+		
+		empty($this->page)?:$data['page'] = $this->page;
+		empty($this->master)?:$data['master'] = $this->master;
+		empty($this->type)?:$data['type'] = $this->type;
+		empty($this->url_client_NAME)?:$data['url_client_NAME'] = $this->url_client_NAME;
 
-		$data['page'] = $this->page;
-		$data['type'] = $this->type;
-		$data['master'] = $this->master;
-		$data['url_client_NAME'] = $this->url_client_NAME;
-
-		$this->view("admin/layout/head",$arr);
+		$this->view("admin/layout/head",$head);
 		$this->view("admin/layout/header");
 		$this->view("admin/layout/sidebar",$data);
 		$this->view("admin/index",$data);
-		$this->view("admin/layout/script");
-
+		$this->view("admin/layout/script",$script);
 	}
 
 	//pages
@@ -281,7 +279,7 @@ Class Admin extends Controller{
 					//if($this->master === true){
 
 					if($this->client_url_check($err)){
-						$this->assets_table();
+						//$this->assets_table();
 						$this->page = "inventory";
 						$this->default = true;
 						
@@ -307,7 +305,7 @@ Class Admin extends Controller{
 
 
 				if($_SERVER['REQUEST_METHOD'] == "POST" && count($_POST) > 0){
-					$Inventory = $this->load_model('Inventory');
+
 					if(isset($_POST['type'])){
 							if($_POST['type'] == "editItem"){
 								$Inventory->edit($_POST);

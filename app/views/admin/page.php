@@ -21,3 +21,5 @@
     </section>
   </div>
 </div>
+<?=show($data);?>
+

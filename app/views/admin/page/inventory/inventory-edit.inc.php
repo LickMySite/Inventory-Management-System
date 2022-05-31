@@ -5,7 +5,7 @@
 <input type="text" value="<?=$item->item_id;?>" name="item_id">
   <div class="mb-3">
     <label for="exampleFormControlInput1" class="form-label">Name&colon; <?=$item->item;?></label>
-    <input type="text" name="item" class="form-control" id="exampleFormControlInput1" placeholder="<?=$item->item;?>" required>
+    <input type="text" name="item" class="form-control" id="exampleFormControlInput1" placeholder="<?=$item->item;?>" value="<?=$item->item;?>" required>
   </div>
   <div class="mb-3">
     <label for="exampleFormControlInput1" class="form-label">Type&colon; <?=$item->type;?></label>
@@ -29,15 +29,3 @@
 </form>
 
 
-<?=show($data);?>
-
-<!-- [item] => stdClass Object
-        (
-            [item_id] => 141
-            [type] => 
-            [per] => 1
-            [item] => fourth
-            [begin] => 0
-            [client_id] => 8
-            [rate_id] => 
-        ) -->

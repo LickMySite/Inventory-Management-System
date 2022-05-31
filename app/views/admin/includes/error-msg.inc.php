@@ -1,13 +1,12 @@
 <?php
 
-if(isset($errors)): echo
-  '<div class="status alert alert-danger" >'
-  .check_error().
-  '</div>';
+if(isset($_SESSION['error'])):
+  echo '<div class="status alert alert-danger"><p>';
+  echo check_error();
+  echo '</p></div>';
 
-elseif(isset($_SESSION['msg'])): echo
-  '<div class="status alert alert-info" ><p>hello'
-  .check_msg().
-  '</p></div>';
-
+elseif(isset($_SESSION['msg'])): 
+  echo '<div class="status alert alert-info" ><p>';
+  echo check_msg();
+  echo '</p></div>';
 endif;
