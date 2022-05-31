@@ -35,7 +35,6 @@ Class Admin extends Controller{
 
 		if(in_array($url,$company_list,true)){
 			$this->type = "one";
-
 			$this->url_client_NAME = $url;
 			$this->url_client_ID = array_search($url,$company_list,true);
 			return true;
@@ -112,7 +111,7 @@ Class Admin extends Controller{
 	}
 
 	private function load_page($data = []){
-
+		
 		$head = [
 			"page" => $this->page,
 			"style" => $this->style
@@ -122,6 +121,10 @@ Class Admin extends Controller{
 			"script" => $this->script,
 			"example" => $this->example
 		];
+
+		$sidebar = [
+			"page" => $this->page,
+		];
 		
 		empty($this->page)?:$data['page'] = $this->page;
 		empty($this->master)?:$data['master'] = $this->master;
@@ -130,9 +133,13 @@ Class Admin extends Controller{
 
 		$this->view("admin/layout/head",$head);
 		$this->view("admin/layout/header");
-		$this->view("admin/layout/sidebar",$data);
+		$this->view("admin/layout/sidebar",$sidebar);
 		$this->view("admin/index",$data);
 		$this->view("admin/layout/script",$script);
+		// show($data);
+		// show($head);
+		// show($script);
+
 	}
 
 	//pages
@@ -156,196 +163,75 @@ Class Admin extends Controller{
 		return $this->load_page();
 	}
 
-	public function location($url, $err = null){
-		$this->load_user_data('admin');
-		if($url === CONTROLLER){
-			$Inventory = $this->load_model('Inventory');
-			$this->type = "all";
-			$arr['section'] = $Inventory->get_section();
-			$arr['locate'] = $Inventory->get_location();
-			$this->page = "location";
-		}
-
-		if(!empty($arr)){
-			return $this->load_page($this->get_data($arr));
-		}
-		return $this->load_page();
-	}
-
-	public function account($url, $err = null){
-		$this->load_user_data(3);
-		$this->default = true;
-
-		$this->style = array(
-			"bootstrap-datepicker/css/bootstrap-datepicker3",
-			"pnotify/pnotify.custom"
-		);
-		$this->script = array(
-			"jquery-ui/jquery-ui",
-			"jqueryui-touch-punch/jquery.ui.touch-punch",
-			"moment/moment",
-			"fullcalendar/fullcalendar"
-		);
-		$this->example = array("examples.calendar");
-
-		$client_class = $this->load_model('Client');
-
-		if(is_null($err)){
-			if($this->master === true){
-				if($url === CONTROLLER){
-					$this->page = "account";
-					$this->type = "all";
-					$arr['client_stats'] = $client_class->get_all();
-
-				}
-
-				elseif($url == "create"){
-					$this->page = "account";
-					$this->type = "create";
-				}
-
-				elseif($url !== CONTROLLER){
-					if($this->client_url_check($url)){
-
-					$this->page = "account";
-					$this->type = "one";
-
-					$arr['client_NAME'] = $this->url_client_NAME;
-					$arr['company_info'] = $client_class->get_one_by_id($this->url_client_ID);
-					$arr['company_users'] = $client_class->get_client_users($this->url_client_ID);
-					}
-				}
-
-			}
-
-			elseif($this->master === false){
-				if($url === CONTROLLER){
-					$this->page = "account";		
-					$this->type = "one";
-					$arr['company_users'] = $client_class->get_client_users($this->client_ID);
-				}
-			}
-
-			if(count($_POST) > 0){
-				if($this->type == "create"){
-					$client_class->create($_POST);
-				}
-				if($this->type == "one"){
-					$client_class->edit($_POST);
-				}
-
-
-				if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
-					$arr['errors'] = $_SESSION['error'];
-					$arr['POST'] = $_POST;
-				}else{
-					$thisClient = isset($arr['client']->name) ? $arr['client']->name : $_SESSION['client'];
-					redirect_ADMIN("account/".$thisClient);
-				}
-
-			}
-
-			if(!empty($arr)){
-				return $this->load_page($this->get_data($arr));
-			}
-		}
-
-		return $this->load_page();
-	}
-
 	public function inventory($url, $err = null){
 		$this->load_user_data(3);
 		//if(is_null($err)){
 
 			if($url === CONTROLLER){
-				$this->assets_table();
 				$this->page = "inventory";
-				$this->default = true;
-				$Inventory = $this->load_model('Inventory');
 
 				if($this->master === true){
 					$this->type = "all";
-					$arr['table'] = $Inventory->get_all_inv_table();
+					$arr['table'] = Inventory::get_all_inv_table();
 				}else{
 					$this->type = "one";
-					$arr['table'] = $Inventory->get_inv_table($this->client_ID);
+					$arr['table'] = Inventory::get_inv_table($this->client_ID);
 				}
 			}else
-
-			//if($url != CONTROLLER){
 
 			if($url === 'view'){
 
 					//if($this->master === true){
 
 					if($this->client_url_check($err)){
-						//$this->assets_table();
 						$this->page = "inventory";
 						$this->default = true;
 						
 						$arr['client_NAME'] = $this->url_client_NAME;
-						$Inventory = $this->load_model('Inventory');
-						$arr['table'] = $Inventory->get_inv_table($this->url_client_ID);
-						$arr['rate'] = $Inventory->get_rate(5);
+						$arr['table'] = Inventory::get_inv_table($this->url_client_ID);
 					}
 
 
 				//}
-			}
+			}else
 
 			if($url == 'edit'){
 				$this->page = "inventory";
 				$this->type = 'edit';
-				$Inventory = $this->load_model('Inventory');
 
-				$arr['item'] = $Inventory->get_one_item($err);
-				$CLIENT = $Inventory->get_client_name_by_id($arr['item']->client_id);
+				$arr['item'] = Inventory::get_one_item($err);
+				$CLIENT = Inventory::get_client_name_by_id($arr['item']->client_id);
 			}
 
+			if($_SERVER['REQUEST_METHOD'] == "POST" && count($_POST) > 0){
 
-
-				if($_SERVER['REQUEST_METHOD'] == "POST" && count($_POST) > 0){
-
-					if(isset($_POST['type'])){
-							if($_POST['type'] == "editItem"){
-								$Inventory->edit($_POST);
-							}
-							if($_POST['type'] == "deleteItem"){
-								$Inventory->delete($_POST);
-							}
-							if($this->type == 'edit'){
-								$Inventory->edit_item($_POST,$arr['item']->item_id);
-							}
-
-					}
-
-					if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
-						$arr['errors'] = $_SESSION['error'];
-						$arr['POST'] = $_POST;
-					}else{
-						if(isset($_SESSION['msg']) && $_SESSION['msg'] != ""){
-							$arr['msg'] = $_SESSION['msg'];
+				if(isset($_POST['type'])){
+						if($_POST['type'] == "deleteItem"){
+							$Inventory->delete($_POST);
 						}
-						redirect_ADMIN("inventory/view/".$CLIENT->client_name);
-					}
+						if($this->type == 'edit'){
+							Inventory::edit_item($arr['item']->item_id);
+						}
+
 				}
 
-			
-
-			//}
-
-			if(!empty($arr)){
-				return $this->load_page($this->get_data($arr));
+				if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
+					$arr['errors'] = $_SESSION['error'];
+					$arr['POST'] = $_POST;
+				}else{
+					if(isset($_SESSION['msg']) && $_SESSION['msg'] != ""){
+						$arr['msg'] = $_SESSION['msg'];
+					}
+					redirect_ADMIN("inventory/view/".$CLIENT->client_name);
+				}
 			}
-		//}
 
-		return $this->load_page();
+		return $this->load_page(empty($arr)?:$this->get_data($arr));
+
 	}
 
 	public function receiving($url, $err = null, $three = null){
 		$this->load_user_data(3);
-		$this->assets_table();
-		$this->default = true;
 
 		if($this->master === false){
 			if($url == CONTROLLER && is_null($err)){
@@ -359,7 +245,7 @@ Class Admin extends Controller{
 
 		if($this->master === true){
 
-			if($url == CONTROLLER && is_null($err)){
+			if($url === CONTROLLER && is_null($err)){
 				$this->page = "receiving";
 				$this->type = "index";
 				$REC = $this->load_model('Receiving');
@@ -398,8 +284,8 @@ Class Admin extends Controller{
 				if($this->client_url_check($err)){
 					$this->page = "receiving";
 					$this->type = "create";
+					$inv = Inventory::get_inv_table($this->url_client_ID);
 					$REC = $this->load_model('Receiving');
-					$inv = $this->load_model('Inventory')->get_inv_table($this->url_client_ID);
 					$arr['tbl_rows'] = $REC->make_inv_rec_form($inv);
 				}
 			}else
@@ -407,7 +293,6 @@ Class Admin extends Controller{
 			if($url == 'edit'){
 				if($this->client_url_check($err)){
 					$this->page = "receiving";
-					
 				}
 			}else
 
@@ -505,7 +390,7 @@ Class Admin extends Controller{
 							$this->type = "one";
 						}
 						if($err === "create"){
-							$arr['table'] = $Inventory->get_inv_table($this->url_client_ID);
+							$arr['table'] = Inventory::get_inv_table($this->url_client_ID);
 							$this->type = "create";
 						}
 					}
@@ -515,7 +400,7 @@ Class Admin extends Controller{
 						$Inventory = $this->load_model('Inventory');
 						$this->page = "shipping";
 
-						$arr['table'] = $Inventory->get_inv_table($this->$client_ID);
+						$arr['table'] = Inventory::get_inv_table($this->$client_ID);
 						$this->type = "create";
 					}
 				}
@@ -656,6 +541,87 @@ Class Admin extends Controller{
 		return $this->load_page();
 	}
 
+	public function account($url, $err = null){
+		$this->load_user_data(3);
+		$this->default = true;
+
+		$this->style = array(
+			"bootstrap-datepicker/css/bootstrap-datepicker3",
+			"pnotify/pnotify.custom"
+		);
+		$this->script = array(
+			"jquery-ui/jquery-ui",
+			"jqueryui-touch-punch/jquery.ui.touch-punch",
+			"moment/moment",
+			"fullcalendar/fullcalendar"
+		);
+		$this->example = array("examples.calendar");
+
+		$client_class = $this->load_model('Client');
+
+		if(is_null($err)){
+			if($this->master === true){
+				if($url === CONTROLLER){
+					$this->page = "account";
+					$this->type = "all";
+					$arr['client_stats'] = $client_class->get_all();
+
+				}
+
+				elseif($url == "create"){
+					$this->page = "account";
+					$this->type = "create";
+				}
+
+				elseif($url !== CONTROLLER){
+					if($this->client_url_check($url)){
+
+					$this->page = "account";
+					$this->type = "one";
+
+					$arr['client_NAME'] = $this->url_client_NAME;
+					$arr['company_info'] = $client_class->get_one_by_id($this->url_client_ID);
+					$arr['company_users'] = $client_class->get_client_users($this->url_client_ID);
+					}
+				}
+
+			}
+
+			elseif($this->master === false){
+				if($url === CONTROLLER){
+					$this->page = "account";		
+					$this->type = "one";
+					$arr['company_users'] = $client_class->get_client_users($this->client_ID);
+				}
+			}
+
+			if(count($_POST) > 0){
+				if($this->type == "create"){
+					$client_class->create($_POST);
+				}
+				if($this->type == "one"){
+					$client_class->edit($_POST);
+				}
+
+
+				if(isset($_SESSION['error']) && $_SESSION['error'] != ""){
+					$arr['errors'] = $_SESSION['error'];
+					$arr['POST'] = $_POST;
+				}else{
+					$thisClient = isset($arr['client']->name) ? $arr['client']->name : $_SESSION['client'];
+					redirect_ADMIN("account/".$thisClient);
+				}
+
+			}
+
+			if(!empty($arr)){
+				return $this->load_page($this->get_data($arr));
+			}
+		}
+
+		return $this->load_page();
+	}
+
 	public function settings(){
 		$this->load_user_data(3);
 		$Settings = new Settings();
@@ -673,6 +639,22 @@ Class Admin extends Controller{
 
 		$arr['settings'] = $Settings->get_all_settings();
 		$this->page = "settings";
+
+		if(!empty($arr)){
+			return $this->load_page($this->get_data($arr));
+		}
+		return $this->load_page();
+	}
+
+	public function location($url, $err = null){
+		$this->load_user_data('admin');
+		if($url === CONTROLLER){
+			$Inventory = $this->load_model('Inventory');
+			$this->type = "all";
+			$arr['section'] = $Inventory->get_section();
+			$arr['locate'] = $Inventory->get_location();
+			$this->page = "location";
+		}
 
 		if(!empty($arr)){
 			return $this->load_page($this->get_data($arr));

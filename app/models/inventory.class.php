@@ -64,22 +64,19 @@ Class Inventory
 	}
 
 	//use
-	public function edit_item(int $ID){
+	public static function edit_item(int $ID){
 
-		$arr['item'] = trim(filter_input(INPUT_POST,'item',FILTER_SANITIZE_SPECIAL_CHARS));
-		$arr['types'] = trim(filter_input(INPUT_POST,'types',FILTER_SANITIZE_SPECIAL_CHARS));
-		$arr['per'] = trim(filter_input(INPUT_POST,'per',FILTER_SANITIZE_SPECIAL_CHARS));
-		$arr['begin'] = trim(filter_input(INPUT_POST,'begin',FILTER_SANITIZE_SPECIAL_CHARS));
+		$arr['item'] = filter_input(INPUT_POST,'item',FILTER_SANITIZE_SPECIAL_CHARS);
+		$arr['types'] = filter_input(INPUT_POST,'types',FILTER_SANITIZE_SPECIAL_CHARS);
+		$arr['per'] = filter_input(INPUT_POST,'per',FILTER_SANITIZE_SPECIAL_CHARS);
+		$arr['begin'] = filter_input(INPUT_POST,'begin',FILTER_SANITIZE_SPECIAL_CHARS);
 		$data['csrf_token'] = clean_input($_POST['csrf_token']);
 		$arr['item_id'] = $ID;
 
-		!empty($arr['item'])?: $_SESSION['error'] = "Please enter an item name";
-		preg_match("/^[a-zA-Z0-9- ]+$/", $arr['item'])?:$_SESSION['error'] = "Please enter a valid item name";
-		!preg_match("/^[0-9]+$/", $arr['per'])
-			|| !is_int($arr['per'])
-			|| $arr['per'] != 0
-			?: $_SESSION['error'] = "Per must be a number";
-		!is_int($arr['begin']) || $arr['begin'] != 0 ?: $_SESSION['error'] = "Begin must be a number";
+		!empty($arr['item'])?: $_SESSION['error'] .= "Please enter an item name<br>";
+		preg_match("/^[a-zA-Z0-9- ]+$/", $arr['item'])?:$_SESSION['error'] = "Please enter a valid item name<br>";
+		preg_match("/^[0-9]+$/", $arr['per']) ?: $_SESSION['error'] .= "Per must be a number<br>";
+		preg_match("/^[0-9]+$/", $arr['begin']) ?: $_SESSION['error'] .= "Begin must be a number<br>";
 
 		if(!isset($_SESSION['error']) || $_SESSION['error'] == ""){
 			$query = "UPDATE inventory set item = :item, per = :per, begin =:begin, type =:types where item_id = :item_id";
@@ -347,7 +344,7 @@ Class Inventory
 		}
 	}
 	//use
-	public function get_all_inv_table(){
+	public static function get_all_inv_table(){
 
     $DB = Database::newInstance();
 
@@ -381,7 +378,7 @@ Class Inventory
 		}
 	}
 	//use
-	public function get_inv_table(int $id){
+	public static function get_inv_table(int $id){
 		$arr['id'] = $id;
 
     $DB = Database::newInstance();
@@ -716,7 +713,7 @@ Class Inventory
 		return false;
 	}
 
-	public function get_one_item($ID){
+	public static function get_one_item($ID){
 
 		$arr['ID'] = $ID;
 
@@ -731,7 +728,7 @@ Class Inventory
 
 		return false;
 	}
-	public function get_client_name_by_id($id){
+	public static function get_client_name_by_id(int $id){
 
 		$arr['id'] = $id;
 
