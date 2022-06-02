@@ -2,13 +2,8 @@
 
 Class Auth 
 {
-	private $error = "";
-	private $id = null;
-	private $blocked = false;
 
-
-  public static function logged_in()
-	{
+  public static function logged_in(){
 		if(!empty($_SESSION['user_url']) && isset($_SESSION['user_role'])){
 			return true;
 		}
@@ -26,12 +21,11 @@ Class Auth
 			$access[1] = ['admin',3,2,1];
 
 			if(!in_array($_SESSION['user_role'], $access[$allowed])){
-				header("Location: " . ADMIN);
-				die;
+				redirect_ADMIN();
 			}
 		}else{
 			if($redirect){
-        redirect(ROOT. "login");
+        redirect("login");
 			}
 		}
 
@@ -49,19 +43,16 @@ Class Auth
 			session_destroy();
       my_session_regenerate_id();
 		}
-    redirect(ROOT);
+    redirect();
 	}
 
 
-	public static function is_admin()
-	{
-		if(!empty($_SESSION['USER_DATA']))
-		{
-			if($_SESSION['USER_DATA']->role == 'admin'){
+	public static function is_admin(){
+		if(!empty($_SESSION['user_role'])){
+			if($_SESSION['user_role'] == 'admin'){
 				return true;
 			}
 		}
-
 		return false;
 	}
 	

@@ -22,12 +22,12 @@ function check_error(){
 	}
 }
 
-function redirect($link){
+function redirect($link = null){
 	header("Location: " . ROOT . $link);
 	die;
 }
 
-function redirect_ADMIN($link){
+function redirect_ADMIN($link = null){
 	header("Location: " . ADMIN . $link);
 	die;
 }

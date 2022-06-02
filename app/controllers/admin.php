@@ -21,9 +21,10 @@ Class Admin extends Controller{
 		$this->client_ID = $_SESSION['client_id'];
 		$this->user_role = $_SESSION['user_role'];
 
-		if($this->client_ID == "1" && $this->user_role == "admin"){
+		// if($this->client_ID == "1" && $this->user_role == "admin"){
+			!Auth::is_admin()?:
 			$this->master = true;
-		}
+		// }
 		return;
 	}
 
@@ -166,7 +167,7 @@ Class Admin extends Controller{
 			if($url === CONTROLLER){
 				$this->page = "inventory";
 
-				if($this->master === true){
+				if(Auth::is_admin()){
 					$this->type = "all";
 					$arr['table'] = Inventory::get_all_inv_table();
 				}else{
@@ -177,7 +178,7 @@ Class Admin extends Controller{
 
 			if($url === 'view'){
 
-					//if($this->master === true){
+					//if(Auth::is_admin()){
 
 					if($this->client_url_check($err)){
 						$this->page = "inventory";
@@ -229,7 +230,7 @@ Class Admin extends Controller{
 	public function receiving($url, $err = null, $three = null){
 		$this->load_user_data(3);
 
-		if($this->master === false){
+		if(!Auth::is_admin()){
 			if($url == CONTROLLER && is_null($err)){
 				$REC = $this->load_model('Receiving');
 				$this->page = "receiving";
@@ -239,7 +240,7 @@ Class Admin extends Controller{
 			}
 		}else
 
-		if($this->master === true){
+		if(Auth::is_admin()){
 
 			if($url === CONTROLLER && is_null($err)){
 				$this->page = "receiving";
@@ -354,8 +355,8 @@ Class Admin extends Controller{
 	public function shipping($url, $err = null){
 
 		$this->load_user_data(3);
-		$this->assets_table();
-		$this->default = true;
+		//$this->assets_table();
+		//$this->default = true;
 
 		if(is_null($err)){
 
@@ -363,7 +364,7 @@ Class Admin extends Controller{
 				$Inventory = $this->load_model('Inventory');
 				$this->page = "shipping";
 
-				if($this->master === true){
+				if(Auth::is_admin()){
 					$arr['table'] = $Inventory->get_all_ship_table();
 					$this->type = "all";
 				}else{
@@ -373,7 +374,7 @@ Class Admin extends Controller{
 			}
 			
 			elseif($url !== CONTROLLER){
-				if($this->master === true){
+				if(Auth::is_admin()){
 					
 					if($this->client_url_check($url)){
 						$arr['client_NAME'] = $this->url_client_NAME;
@@ -391,7 +392,7 @@ Class Admin extends Controller{
 						}
 					}
 				}
-				if($this->master === false){
+				if(!Auth::is_admin()){
 					if($url === "create"){
 						$Inventory = $this->load_model('Inventory');
 						$this->page = "shipping";
@@ -445,8 +446,8 @@ Class Admin extends Controller{
 	public function users($url, $err = null){
 		
 		$this->load_user_data(3);
-		$this->assets_table();
-		$this->default = true;
+		//$this->assets_table();
+		//$this->default = true;
 		$this->page = "users";
 
 		$User = $this->load_model('User');
@@ -454,19 +455,20 @@ Class Admin extends Controller{
 		if(is_null($err)){
 
 			if($url === CONTROLLER){
-				if($this->master === true){
+				if(Auth::is_admin()){
 				$arr['table'] = $User->get_user_list();
 				$this->type = "all";
-				}
-				elseif($this->master === false){
+				}else
+				
+				if(!Auth::is_admin()){
 				$arr['table'] = $User->get_client_users($this->client_ID);
 				$arr['company_name'] = $this->user_info->client_name;
 				$this->type = "one";
 				}
-			}
+			}else
 
-			elseif($url !== CONTROLLER){
-				if($this->master === true){
+			if($url !== CONTROLLER){
+				if(Auth::is_admin()){
 
 					if($this->client_url_check($url)){
 						$arr['client_NAME'] = $this->url_client_NAME;
@@ -556,20 +558,20 @@ Class Admin extends Controller{
 		$client_class = $this->load_model('Client');
 
 		if(is_null($err)){
-			if($this->master === true){
+			if(Auth::is_admin()){
 				if($url === CONTROLLER){
 					$this->page = "account";
 					$this->type = "all";
 					$arr['client_stats'] = $client_class->get_all();
 
-				}
+				}else
 
-				elseif($url == "create"){
+				if($url == "create"){
 					$this->page = "account";
 					$this->type = "create";
-				}
+				}else
 
-				elseif($url !== CONTROLLER){
+				if($url !== CONTROLLER){
 					if($this->client_url_check($url)){
 
 					$this->page = "account";
@@ -581,9 +583,9 @@ Class Admin extends Controller{
 					}
 				}
 
-			}
+			}else
 
-			elseif($this->master === false){
+			if(!Auth::is_admin()){
 				if($url === CONTROLLER){
 					$this->page = "account";		
 					$this->type = "one";
@@ -626,8 +628,7 @@ Class Admin extends Controller{
 			$arr['saved'] = "Settings Saved!";
 		}
 
-		if(count($_POST) > 0)
-		{
+		if(count($_POST) > 0){
 			$errors = $Settings->save_settings($_POST);
 			redirect_ADMIN('settings?saved=true');
 			die;
@@ -658,13 +659,4 @@ Class Admin extends Controller{
 		return $this->load_page();
 	}
 
-	public function logout(){
-		if(isset($_SESSION['user_url']))
-		{
-			unset($_SESSION);
-		}
-			my_session_regenerate_id();
-			session_destroy();
-			redirect('login');
-	}
 }
