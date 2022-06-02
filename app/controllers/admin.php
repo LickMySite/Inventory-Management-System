@@ -17,21 +17,19 @@ Class Admin extends Controller{
 
 	//page assets
 	private function load_user_data($role = null){
-		$User = $this->load_model('User');
-		$User->check_login(true, $role);
+		Auth::check_login(true, $role);
 		$this->client_ID = $_SESSION['client_id'];
 		$this->user_role = $_SESSION['user_role'];
 
 		if($this->client_ID == "1" && $this->user_role == "admin"){
 			$this->master = true;
 		}
-
 		return;
 	}
 
 	private function client_url_check($url){
 
-		$company_list = $this->load_model('Client')->company_name_list();
+		$company_list = Client::company_name_list();
 
 		if(in_array($url,$company_list,true)){
 			$this->type = "one";
@@ -136,10 +134,8 @@ Class Admin extends Controller{
 		$this->view("admin/layout/sidebar",$sidebar);
 		$this->view("admin/index",$data);
 		$this->view("admin/layout/script",$script);
-		// show($data);
-		// show($head);
-		// show($script);
 
+		show($_SESSION);
 	}
 
 	//pages

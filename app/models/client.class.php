@@ -101,7 +101,7 @@ Class Client
 		$DB->write($query,$arr);
 	}
 
-	public function company_name_list(){
+	public static function company_name_list(){
 		$query = "SELECT id,client_name from client";
     $DB = Database::newInstance();
 		$check = $DB->read($query);

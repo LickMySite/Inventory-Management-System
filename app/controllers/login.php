@@ -24,7 +24,7 @@ Class Login extends Controller
 		$data['page'] = 'login';
 
 		$this->view('page/login',$data);
-
+		show($_SESSION);
 	}
 
 }
