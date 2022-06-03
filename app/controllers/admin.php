@@ -19,7 +19,7 @@ Class Admin extends Controller{
 	private function load_user_data($role = null){
 		Auth::check_login(true, $role);
 		$this->client_ID = $_SESSION['client_id'];
-		$this->user_role = $_SESSION['user_role'];
+		//$this->user_role = $_SESSION['user_role'];
 
 		// if($this->client_ID == "1" && $this->user_role == "admin"){
 			!Auth::is_admin()?:
@@ -136,7 +136,6 @@ Class Admin extends Controller{
 		$this->view("admin/index",$data);
 		$this->view("admin/layout/script",$script);
 
-		show($_SESSION);
 	}
 
 	//pages

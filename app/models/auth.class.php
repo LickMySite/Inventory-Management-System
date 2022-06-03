@@ -52,8 +52,8 @@ Class Auth
 			if($_SESSION['user_role'] == 'admin'){
 				return true;
 			}
+			return false;
 		}
-		return false;
 	}
 	
 }
